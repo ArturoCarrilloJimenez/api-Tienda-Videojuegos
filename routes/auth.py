@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, Header
-from requests import Session
+from sqlalchemy.orm import Session
 from utils.fuction_jwt import validate_token, write_token
 from fastapi.responses import JSONResponse
 from starlette import status
