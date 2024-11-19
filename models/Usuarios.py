@@ -1,12 +1,13 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from sqlalchemy import Column, Integer, String, Boolean
 from configs.db import Base
+from typing import Optional
 
 class UsuarioPy(BaseModel): 
     id: int
     username: str
-    password: str
-    name: str
+    password: Optional[str] = Field(default=None)
+    name: Optional[str] = Field(default=None)
     admin: bool
 
 
