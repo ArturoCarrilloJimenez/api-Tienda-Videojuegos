@@ -2,7 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from models import Articulos,Carrito,Categorias,Usuarios
-
+from routes.mainRoutes import mainRoutes
+from routes.categoryRoutes import categoryRoutes
 
 from configs.db import engine
 
@@ -21,6 +22,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(mainRoutes, prefix='/api')
+app.include_router(categoryRoutes, prefix='/api')
 
 # Creación del modelo
 Articulos.Base.metadata.create_all(bind=engine)
