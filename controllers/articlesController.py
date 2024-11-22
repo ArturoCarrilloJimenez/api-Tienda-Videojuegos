@@ -12,7 +12,7 @@ def getArticleByCategory(nameCat: str, db: Session):
     return db.query(ArticulosDB).join(CategoriasDB).filter(CategoriasDB.name == nameCat).all()
 
 def addArticle(article: ArticulosPy, db: Session) -> None :
-    newArticle = ArticulosDB(id=article.id,name=article.name,price=article.price,tax=article.tax,description=article.description,image=article.image,stock=article.stock,idCategory=article.idCategory)
+    newArticle = ArticulosDB(name=article.name,price=article.price,tax=article.tax,description=article.description,image=article.image,stock=article.stock,idCategory=article.idCategory)
     db.add(newArticle)
     db.commit()
     db.refresh(newArticle)

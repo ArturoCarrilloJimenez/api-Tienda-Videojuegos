@@ -1,10 +1,11 @@
-from pydantic import BaseModel
+from typing import Optional
+from pydantic import BaseModel, Field
 from sqlalchemy import Column, Integer, String, Float, ForeignKey
 from configs.db import Base
 
 
 class ArticulosPy(BaseModel): 
-    id: int
+    id: Optional[int] = Field(default=None)
     name: str
     price: int
     tax: float
@@ -17,7 +18,7 @@ class ArticulosPy(BaseModel):
 class ArticulosDB(Base):
     __tablename__ = 'articulos'
     
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(100), unique=True)
     price = Column(Float, default=0)
     tax = Column(Integer, default=0)

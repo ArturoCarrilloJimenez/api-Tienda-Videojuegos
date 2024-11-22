@@ -16,8 +16,14 @@ auth_routes = APIRouter(tags=['Autenticación'])
 def login(user: UsuarioPy, db: Session = Depends(get_db)):
     result: UsuarioDB = db.query(UsuarioDB).filter(UsuarioDB.username == user.username).first()
     if result and verify_password(user.password,result.password):
-        userPy: UsuarioPy = UsuarioPy(id = result.id, username = result.username, admin = result.admin)
-        return write_token(userPy.dict())
+        userPy: UsuarioPy = UsuarioPy(id = result.id, username = result.username)
+
+        if result.admin:
+            role = 'admin'
+        else:
+            role = 'user'
+            
+        return write_token(userPy.dict(), role)
     else:
         return JSONResponse(content={"detail": "User not found"}, status_code=404)
 

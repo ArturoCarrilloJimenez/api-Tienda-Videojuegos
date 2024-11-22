@@ -8,7 +8,7 @@ def getOneCategory(id: int, db: Session) :
     return db.query(CategoriasDB).filter(CategoriasDB.id == id).first()
 
 def addCategory(category: CategoriaPy, db: Session) -> None :
-    newCategory = CategoriasDB(id=category.id,name=category.name)
+    newCategory = CategoriasDB(name=category.name)
     db.add(newCategory)
     db.commit()
     db.refresh(newCategory)

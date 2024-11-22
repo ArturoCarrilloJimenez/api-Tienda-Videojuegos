@@ -9,7 +9,13 @@ def getOneUsuario(id: int, db: Session) :
     return db.query(UsuarioDB).filter(UsuarioDB.id == id).first()
 
 def addUsuario(user: UsuarioPy, db: Session) -> None :
-    newUsuario = UsuarioDB(id = user.id, username = user.username, password = hashing(user.password), name = user.name, admin = False)
+    newUsuario = UsuarioDB(username = user.username, password = hashing(user.password), name = user.name, admin = False)
+    db.add(newUsuario)
+    db.commit()
+    db.refresh(newUsuario)
+
+def addAdminUsuario(user: UsuarioPy, db: Session) -> None :
+    newUsuario = UsuarioDB(id=user.id,username = user.username, password = hashing(user.password), name = user.name, admin = True)
     db.add(newUsuario)
     db.commit()
     db.refresh(newUsuario)
