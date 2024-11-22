@@ -6,6 +6,7 @@ from routes.mainRoutes import mainRoutes
 from routes.categoryRoutes import categoryRoutes
 from routes.articulosRoutes import articlesRoutes
 from routes.auth import auth_routes
+from routes.userRoutes import userRouter
 
 from configs.db import engine
 
@@ -28,6 +29,7 @@ app.add_middleware(
 app.include_router(mainRoutes, prefix='/api')
 app.include_router(categoryRoutes, prefix='/api')
 app.include_router(articlesRoutes, prefix='/api')
+app.include_router(userRouter, prefix='/api')
 app.include_router(auth_routes, prefix='/api')
 
 # Creación del modelo
