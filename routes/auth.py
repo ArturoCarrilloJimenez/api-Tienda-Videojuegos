@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, Header
 from sqlalchemy.orm import Session
-from utils.fuction_jwt import validate_token, write_token
+from utils.fuction_jwt import get_current_user, validate_token, write_token
 from fastapi.responses import JSONResponse
 from starlette import status
 
@@ -30,9 +30,9 @@ def login(user: UsuarioPy, db: Session = Depends(get_db)):
 
 # Verifico el token creado anteriormente
 @auth_routes.post("/verify/token", status_code=status.HTTP_202_ACCEPTED)
-def verify_token(Authorization: str = Header(None)):
+def verify_token(Authorization: str = Header(None)) :
     if Authorization is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='No has pasado el token')
     token = Authorization.split(" ")[1]
-    return validate_token(token, output=True)
+    return validate_token(token)
     

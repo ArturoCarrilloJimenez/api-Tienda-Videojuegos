@@ -18,11 +18,9 @@ def write_token(data: dict, role: str):
     return token
 
 
-def validate_token(token, output=False):
+def validate_token(token):
     try:
-        if output:
-            return decode(token, key=getenv("SECRET"), algorithms=["HS256"])
-        decode(token, key=getenv("SECRET"), algorithms=["HS256"])
+        return decode(token, key=getenv("SECRET"), algorithms=["HS256"])
     except exceptions.DecodeError:
         return JSONResponse(content={"detail": "Invalid Token"}, status_code=401)
     except exceptions.ExpiredSignatureError:
